@@ -144,10 +144,10 @@ class SubtreeDeploy
       # copy latest code to the deploy branch.
       git "checkout #{e current_commit} -- ."
 
+      block.call if block
+
       # add the latest code to the deploy branch.
       git "add -f ."
-
-      block.call if block
     end
 
     return self
