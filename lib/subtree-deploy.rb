@@ -7,9 +7,6 @@ class SubtreeDeploy
     @revision_file = File.expand_path(options[:revision_file] || "REVISION")
     @prefix = options[:prefix] || "subtree"
     @repository = options[:repository]
-    unless @repository
-      raise ArgumentError, ":repository options are required"
-    end
     @branch = options[:branch] || "master"
     @remote_name = options[:remote_name] || "subtree"
     @build_dir = options[:build_dir] || ".build"
