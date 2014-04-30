@@ -139,7 +139,7 @@ class SubtreeDeploy
       end
 
       # delete existent files
-      sh "find . -mindepth 1 -delete"
+      sh "find . -maxdepth 1 ! -name .git ! -name . -exec rm -rf {} \\;"
 
       # copy latest code to the deploy branch.
       git "checkout #{e current_commit} -- ."
