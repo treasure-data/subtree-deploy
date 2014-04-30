@@ -138,6 +138,9 @@ class SubtreeDeploy
         git "checkout -b #{e dest_branch} #{e current_commit}"
       end
 
+      # delete existent files
+      sh "find . -mindepth 1 -delete"
+
       # copy latest code to the deploy branch.
       git "checkout #{e current_commit} -- ."
 
