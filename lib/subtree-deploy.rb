@@ -68,7 +68,7 @@ class SubtreeDeploy
     git "checkout #{ep @prefix}"
 
     # save last revision
-    @last_revision = current_revision || git_cmdout("rev-list --max-parents=0 #{e @remote_name}/#{e @branch}").strip
+    @last_revision = current_revision #|| git_cmdout("rev-list --max-parents=0 #{e @remote_name}/#{e @branch}").strip
 
     # update revision file
     revision = git_cmdout("rev-parse #{e treeish}").strip
