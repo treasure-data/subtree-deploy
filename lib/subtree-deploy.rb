@@ -138,6 +138,9 @@ class SubtreeDeploy
         git "checkout -b #{e dest_branch} #{e current_commit}"
       end
 
+      # save last revision
+      @last_revision = current_revision #|| git_cmdout("rev-list --max-parents=0 #{e @remote_name}/#{e @branch}").strip
+
       # delete existent files
       sh "find . -maxdepth 1 ! -name .git ! -name . -exec rm -rf {} \\;"
 
@@ -157,9 +160,7 @@ class SubtreeDeploy
     current_commit = git_cmdout("rev-parse HEAD").strip
 
     Dir.chdir(@build_dir) do
-      last_commit = git_cmdout("rev-parse HEAD").strip
-
-      file = create_update_message_file("Updated #{@remote_name} to ", last_commit, current_commit)
+      file = create_update_message_file("Updated #{@remote_name} to ", @last_revision, current_commit)
 
       begin
         git "commit -a -F #{ep file.path}"
