@@ -130,6 +130,7 @@ class SubtreeDeploy
     git "clone . #{e @build_dir}"
     sh "mv -f #{e shallow_backup} #{e shallow}" if File.exists?(shallow_backup)
     sh "cp -f #{e File.join('.git', 'config')} #{e File.join(@build_dir, '.git')}"
+    sh "cp -f #{e File.join('.git', 'shallow')} #{e File.join(@build_dir, '.git')}"
 
     Dir.chdir(@build_dir) do
       git "fetch origin"
