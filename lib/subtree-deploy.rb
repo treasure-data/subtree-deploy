@@ -122,9 +122,13 @@ class SubtreeDeploy
   #
   def build(dest_branch, &block)
     current_commit = git_cmdout("rev-parse HEAD").strip
+    shallow = File.join('.git', 'shallow')
+    shallow_backup = File.join('.git', 'shallow.bak')
 
     sh "rm -rf #{e @build_dir}"
+    sh "mv -f #{e shallow} #{e shallow_backup}" if File.exists?(shallow)
     git "clone . #{e @build_dir}"
+    sh "mv -f #{e shallow_backup} #{e shallow}" if File.exists?(shallow_backup)
     sh "cp -f #{e File.join('.git', 'config')} #{e File.join(@build_dir, '.git')}"
 
     Dir.chdir(@build_dir) do
